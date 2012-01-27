@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+body {
+	font-family: arial;
+}
+.page {
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.importni-formular {
+	width: 510px;
+}
+.importni-formular .formular-hlavicka {
+	width: 100%;
+	height: 20px;
+	background: url("../images/formular-hlavicka-410.png") transparent left top;
+}
+.importni-formular .formular-obsah {
+	width: 100%;
+	height: 100%;
+	background: url("../images/formular-obsah-410.png") repeat-y;
+}
+.importni-formular .formular-paticka {
+	width: 100%;
+	height: 20px;
+	background: url("../images/formular-paticka-410.png") transparent left bottom;
+}
