@@ -100,14 +100,14 @@ class xmlVD {
 		$this->dodaciListCislo = "0000000000";
 		
 		$this->vypisPolozkyDobropisu($dobropis);
-		
+
 		if($this->chyba == "") {
 			$this->stahnoutTXT();
 		} else {
 			echo $this->chyba;
 		}
-
 	}
+
 	private function vypisPolozkyDobropisu($dobropis) {
 		foreach ($dobropis->SeznamPolozek->Polozka as $polozka) {
 			
@@ -121,7 +121,16 @@ class xmlVD {
 			$this->dph = $this->upravDPH($polozka->SazbaDPH);
 			$this->celkovaCena = $this->upravDelku(number_format($this->mnozstvi * $this->cenaZaJednotku, 2), 12);
 			$this->baleni = $this->upravDelku($this->baleni, 13);
-			$this->vytvorDatovouVetu();
+
+            preg_match('/^obal ([0-9]+)$/', $polozka->Popis, $matches);
+
+            if(is_numeric($matches[1])) {
+                $this->nazevZbozi = $this->upravNazev($polozka->Popis);
+                $this->registrZbozi = $this->upravDelku($matches[1], 12);
+            }
+
+            $this->vytvorDatovouVetu();
+
 		}
 	}
 	
@@ -244,20 +253,5 @@ class xmlVD {
 		return $cisloDodaku[0];
 		
 	}
-	
-	/*
-	private function upravNazev($nazev) {
-		$orezNazev = iconv("UTF-8", "windows-1250", $nazev);
-		//$orezNazev = $nazev;
-		$convert = new Latin1UTF8();
-		if(strlen($orezNazev) > 24) {
-			$upravenyNazev = substr($orezNazev,0,24);
-		} else {
-			$upravenyNazev = str_pad($orezNazev,24," ");
-		}
-		return $convert->mixed_to_latin1($upravenyNazev);
-	//return $upravenyNazev;
-	}
-	*/
 }
 
